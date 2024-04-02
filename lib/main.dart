@@ -18,6 +18,34 @@ class Body extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Placeholder();
+    return Container(
+      height: 300,
+      width: double.infinity,
+      color: Colors.grey,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.end,
+        children: [
+          Container(
+            width: 100,
+            height: 80,
+            color: Colors.red,
+            child: Text("Container 1"),
+          ),
+          Container(
+            width: 100,
+            height: 80,
+            color: Colors.green,
+            child: Text("Container 2"),
+          ),
+          Container(
+            width: 100,
+            height: 80,
+            color: Colors.blue,
+            child: Text("Container 3"),
+          ),
+        ],
+      )
+    );
   }
 }
