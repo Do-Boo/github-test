@@ -1,135 +1,52 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
 void main() {
   runApp(
-    MaterialApp(
-      home: Scaffold(
-        appBar: AppBar(
-          title: Text("Widget을 상하좌우로 배치하기"),
-        ),
-        body: Body(),
-      ),
+    const MaterialApp(
+      home: HomeWidget(),
     ),
   );
 }
 
-class Body extends StatelessWidget {
-  const Body({super.key});
+class HomeWidget extends StatelessWidget {
+  const HomeWidget({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Column(
+    return const SafeArea(
+      child: Scaffold(
+        body: ContraintsWidget(),
+      ),
+    );
+  }
+}
+
+class ContraintsWidget extends StatelessWidget {
+  const ContraintsWidget({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
       children: [
-        Container(
-          width: 100,
-          height: 100,
-          color: Colors.red,
-          margin: const EdgeInsets.symmetric(vertical: 8),
-        ),
-        Expanded(
+        Flexible(
           child: Container(
-            width: 100,
-            height: 100,
-            color: Colors.red,
-            margin: const EdgeInsets.symmetric(vertical: 8),
-            child: SingleChildScrollView(
-              child: Column(
-                children: [
-                  Container(
-                    width: 50,
-                    height: 50,
-                    color: Colors.blue,
-                    margin: const EdgeInsets.symmetric(vertical: 8),
-                  ),
-                  Container(
-                    width: 50,
-                    height: 50,
-                    color: Colors.blue,
-                    margin: const EdgeInsets.symmetric(vertical: 8),
-                  ),
-                  Container(
-                    width: 50,
-                    height: 50,
-                    color: Colors.blue,
-                    margin: const EdgeInsets.symmetric(vertical: 8),
-                  ),
-                  Container(
-                    width: 50,
-                    height: 50,
-                    color: Colors.blue,
-                    margin: const EdgeInsets.symmetric(vertical: 8),
-                  ),
-                  Container(
-                    width: 50,
-                    height: 50,
-                    color: Colors.blue,
-                    margin: const EdgeInsets.symmetric(vertical: 8),
-                  ),
-                  Container(
-                    width: 50,
-                    height: 50,
-                    color: Colors.blue,
-                    margin: const EdgeInsets.symmetric(vertical: 8),
-                  ),
-                  Container(
-                    width: 50,
-                    height: 50,
-                    color: Colors.blue,
-                    margin: const EdgeInsets.symmetric(vertical: 8),
-                  ),
-                  Container(
-                    width: 50,
-                    height: 50,
-                    color: Colors.blue,
-                    margin: const EdgeInsets.symmetric(vertical: 8),
-                  ),
-                  Container(
-                    width: 50,
-                    height: 50,
-                    color: Colors.blue,
-                    margin: const EdgeInsets.symmetric(vertical: 8),
-                  ),
-                  Container(
-                    width: 50,
-                    height: 50,
-                    color: Colors.blue,
-                    margin: const EdgeInsets.symmetric(vertical: 8),
-                  ),
-                  Container(
-                    width: 50,
-                    height: 50,
-                    color: Colors.blue,
-                    margin: const EdgeInsets.symmetric(vertical: 8),
-                  ),
-                  Container(
-                    width: 50,
-                    height: 50,
-                    color: Colors.blue,
-                    margin: const EdgeInsets.symmetric(vertical: 8),
-                  ),
-                  Container(
-                    width: 50,
-                    height: 50,
-                    color: Colors.blue,
-                    margin: const EdgeInsets.symmetric(vertical: 8),
-                  ),
-                ],
-              ),
+            color: Colors.blue,
+            child: Text(
+              "Hello World! Hello World! Hello World! Hello World! Hello World! Hello World! Hello World! ",
+              style: TextStyle(fontSize: 30),
             ),
           ),
         ),
-        Container(
-          width: 100,
-          height: 100,
-          color: Colors.red,
-          margin: const EdgeInsets.symmetric(vertical: 8),
-        ),
-        Container(
-          width: 100,
-          height: 100,
-          color: Colors.red,
-          margin: const EdgeInsets.symmetric(vertical: 8),
+        Flexible(
+          child: Container(
+            color: Colors.red,
+            child: Text(
+              "Hello World! Hello World! Hello World! Hello World! Hello World! Hello World! Hello World! ",
+              style: TextStyle(fontSize: 30),
+            ),
+          ),
         ),
       ],
     );
