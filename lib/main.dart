@@ -1,4 +1,4 @@
-
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -78,39 +78,39 @@ class TestRadioButton extends StatefulWidget {
   State<TestRadioButton> createState() => _TestRadioButtonState();
 }
 
-enum TestRadioValue { test1, test2, test3 }
+enum TestValue { test1, test2, test3 }
 
 class _TestRadioButtonState extends State<TestRadioButton> {
-  TestRadioValue? selectValue;
+  TestValue? selectValue;
 
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
         ListTile(
-          leading: Radio<TestRadioValue>(
-            value: TestRadioValue.test1,
+          leading: Radio<TestValue>(
+            value: TestValue.test1,
             groupValue: selectValue,
             onChanged: (value) => setState(
               () => selectValue = value!,
             ),
           ),
-          title: Text(TestRadioValue.test1.name),
+          title: Text(TestValue.test1.name),
           onTap: () => setState(() {
-            if (selectValue != TestRadioValue.test1) {
-              selectValue = TestRadioValue.test1;
+            if (selectValue != TestValue.test1) {
+              selectValue = TestValue.test1;
             }
           }),
         ),
-        Radio<TestRadioValue>(
-          value: TestRadioValue.test2,
+        Radio<TestValue>(
+          value: TestValue.test2,
           groupValue: selectValue,
           onChanged: (value) => setState(
             () => selectValue = value!,
           ),
         ),
-        Radio<TestRadioValue>(
-          value: TestRadioValue.test3,
+        Radio<TestValue>(
+          value: TestValue.test3,
           groupValue: selectValue,
           onChanged: (value) => setState(
             () => selectValue = value!,
@@ -185,10 +185,19 @@ class TestPopupMenu extends StatefulWidget {
 }
 
 class _TestPopupMenuState extends State<TestPopupMenu> {
-  
+  TestValue selectValue = TestValue.test1;
 
   @override
   Widget build(BuildContext context) {
-    return PopupMenuButton(itemBuilder: itemBuilder);
+    return Column(
+      children: [
+        Text(selectValue.name),
+        PopupMenuButton(itemBuilder: (context) {
+          return TestValue.values.map((value) => PopupMenuItem(value: value, child: Text(value.name),),).toList();
+        },
+        onSelected: (newValue) => setState(() => selectValue = newValue),
+        ),
+      ],
+    );
   }
 }
