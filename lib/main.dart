@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:vscode_flutter/new_page.dart';
 
 void main() {
   runApp(
@@ -16,42 +17,25 @@ class HomeWidget extends StatefulWidget {
 }
 
 class _HomeWidgetState extends State<HomeWidget> {
-  late int index;
-
-  @override
-  void initState() {
-    super.initState();
-    index = 0;
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text(""),
+        title: const Text("화면 이동하기"),
       ),
-      body: homeBody(),
-      bottomNavigationBar: BottomNavigationBar(
-        items: const [
-          BottomNavigationBarItem(icon: Icon(Icons.home), label: "Home"),
-          BottomNavigationBarItem(icon: Icon(Icons.search), label: "search"),
-          BottomNavigationBarItem(icon: Icon(Icons.person), label: "person"),
-        ],
-        currentIndex: index,
-        onTap: (newIndex) => setState(() => index = newIndex),
+      body: Center(
+        child: TextButton(
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => const NewPage(),
+              ),
+            );
+          },
+          child: const Text("Go to Page"),
+        ),
       ),
     );
-  }
-
-  Widget homeBody() {
-    switch (index) {
-      case 1:
-        return const Center(child: Icon(Icons.search, size: 100));
-      case 2:
-        return const Center(child: Icon(Icons.person, size: 100));
-      case 0:
-      default:
-        return const Center(child: Icon(Icons.home, size: 100));
-    }
   }
 }
