@@ -1,10 +1,27 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:vscode_flutter/new_page.dart';
 
 void main() {
   runApp(
-    const MaterialApp(
-      home: HomeWidget(),
+    MaterialApp.router(
+      routerConfig: GoRouter(
+        initialLocation: "/",
+        routes: [
+          GoRoute(
+              path: "/",
+              name: "home",
+              builder: (context, _) => const HomeWidget()),
+          GoRoute(
+              path: "/new",
+              name: "new",
+              builder: (context, _) => const NewPage()),
+          GoRoute(
+              path: "/new1",
+              name: "new1",
+              builder: (context, _) => const NewPage2()),
+        ],
+      ),
     ),
   );
 }
@@ -25,14 +42,7 @@ class _HomeWidgetState extends State<HomeWidget> {
       ),
       body: Center(
         child: TextButton(
-          onPressed: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => const NewPage(),
-              ),
-            );
-          },
+          onPressed: () => context.pushNamed("new"),
           child: const Text("Go to Page"),
         ),
       ),
