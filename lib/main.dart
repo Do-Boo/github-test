@@ -1,30 +1,21 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
-import 'package:vscode_flutter/new_page.dart';
 
 void main() {
   runApp(
-    MaterialApp.router(
-      routerConfig: GoRouter(
-        initialLocation: "/",
-        routes: [
-          GoRoute(
-              path: "/",
-              name: "home",
-              builder: (context, _) => const HomeWidget()),
-          GoRoute(
-              path: "/new",
-              name: "new",
-              builder: (context, _) => const NewPage()),
-          GoRoute(
-              path: "/new1",
-              name: "new1",
-              builder: (context, _) => const NewPage2()),
-        ],
-      ),
+    MaterialApp(
+      home: const HomeWidget(),
+      theme: CustomTheme,
     ),
   );
 }
+
+final CustomTheme = ThemeData(
+  useMaterial3: true,
+  textTheme: const TextTheme(
+    bodyLarge: TextStyle(fontWeight: FontWeight.normal, fontSize: 30),
+  ),
+  colorScheme: ColorScheme.fromSeed(seedColor: Colors.indigo),
+);
 
 class HomeWidget extends StatefulWidget {
   const HomeWidget({super.key});
@@ -34,18 +25,27 @@ class HomeWidget extends StatefulWidget {
 }
 
 class _HomeWidgetState extends State<HomeWidget> {
+  int count = 0;
+
   @override
   Widget build(BuildContext context) {
+    final textTheme = CustomTheme.textTheme;
+
     return Scaffold(
       appBar: AppBar(
-        title: const Text("화면 이동하기"),
+        title: const Text("Flutter theme"),
       ),
       body: Center(
-        child: TextButton(
-          onPressed: () => context.pushNamed("new"),
-          child: const Text("Go to Page"),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text("Press Count", style: textTheme.bodyLarge),
+            Text("$count", style: textTheme.displayLarge),
+          ],
         ),
       ),
+      floatingActionButton:
+          FloatingActionButton(onPressed: () => setState(() => count++)),
     );
   }
 }
