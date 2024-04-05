@@ -1,51 +1,25 @@
 import 'package:flutter/material.dart';
+import 'package:vscode_flutter/game_body.dart';
 
 void main() {
-  runApp(
-    MaterialApp(
-      home: const HomeWidget(),
-      theme: CustomTheme,
-    ),
-  );
+  runApp(const RSPApp());
 }
 
-final CustomTheme = ThemeData(
-  useMaterial3: true,
-  textTheme: const TextTheme(
-    bodyLarge: TextStyle(fontWeight: FontWeight.normal, fontSize: 30),
-  ),
-  colorScheme: ColorScheme.fromSeed(seedColor: Colors.indigo),
-);
-
-class HomeWidget extends StatefulWidget {
-  const HomeWidget({super.key});
-
-  @override
-  State<HomeWidget> createState() => _HomeWidgetState();
-}
-
-class _HomeWidgetState extends State<HomeWidget> {
-  int count = 0;
+class RSPApp extends StatelessWidget {
+  const RSPApp({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final textTheme = CustomTheme.textTheme;
-
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text("Flutter theme"),
-      ),
-      body: Center(
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Text("Press Count", style: textTheme.bodyLarge),
-            Text("$count", style: textTheme.displayLarge),
-          ],
+    return MaterialApp(
+      home: Scaffold(
+        appBar: AppBar(
+          title: const Text("가위 바위 보!"),
         ),
+        body: const GameBody(),
       ),
-      floatingActionButton:
-          FloatingActionButton(onPressed: () => setState(() => count++)),
+      theme: ThemeData(
+        useMaterial3: false,
+      ),
     );
   }
 }
