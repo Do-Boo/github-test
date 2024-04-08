@@ -1,94 +1,92 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:vscode_flutter/body.dart';
+import 'package:shake/shake.dart';
 
-void main() => runApp(const InstaCloneApp());
+void main() => runApp(const MyApp());
 
-class InstaCloneApp extends StatelessWidget {
-  const InstaCloneApp({super.key});
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      title: "Flutter Demo",
       theme: ThemeData(
-        colorScheme: const ColorScheme.light(
-          primary: Colors.white,
-          secondary: Colors.black,
-        ),
-        bottomNavigationBarTheme: const BottomNavigationBarThemeData(
-          showSelectedLabels: false,
-          showUnselectedLabels: false,
-          selectedItemColor: Colors.black,
-          unselectedItemColor: Colors.grey,
-          type: BottomNavigationBarType.fixed,
-        ),
-        useMaterial3: true,
+        primaryColor: Colors.blue,
+        useMaterial3: false,
       ),
-      home: const InstaCloneHome(),
+      home: const MyHomePage(title: "흔들기 카운트 앱"),
     );
   }
 }
 
-class InstaCloneHome extends StatefulWidget {
-  const InstaCloneHome({super.key});
+class MyHomePage extends StatefulWidget {
+  final String title;
+
+  const MyHomePage({super.key, required this.title});
 
   @override
-  State<InstaCloneHome> createState() => _InstaCloneHomeState();
+  State<MyHomePage> createState() => _MyHomePageState();
 }
 
-class _InstaCloneHomeState extends State<InstaCloneHome> {
-  late int index;
+class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
+  int _counter = 0;
+  late ShakeDetector detector;
 
   @override
   void initState() {
+    WidgetsBinding.instance.addObserver(this);
+    ShakeDetector detector = ShakeDetector.autoStart(
+        onPhoneShake: () => setState(() => _counter++),
+        shakeThresholdGravity: 1.5);
     super.initState();
-    index = 0;
   }
+
+  @override
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    super.dispose();
+  }
+
+  void _incrementCounter() => setState(() => _counter++);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: index == 0
-          ? AppBar(
-              title: Text("Instagram",
-                  style: GoogleFonts.lobsterTwo(
-                      color: Colors.black, fontSize: 32)),
-              centerTitle: false,
-              actions: [
-                IconButton(
-                  onPressed: () {
-                    print("Tab favorite pressed");
-                  },
-                  icon: const Icon(Icons.favorite_outline, size: 32),
-                ),
-                IconButton(
-                  onPressed: () {
-                    print("Tab paperplane pressed");
-                  },
-                  icon: const Icon(CupertinoIcons.paperplane, size: 32),
-                ),
-              ],
-            )
-          : null,
-      body: InstaBody(index: index),
-      bottomNavigationBar: BottomNavigationBar(
-        items: const [
-          BottomNavigationBarItem(
-              icon: Icon(Icons.home, size: 28), label: "Home"),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.search, size: 28), label: "Search"),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.person, size: 28), label: "Profile"),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.notifications, size: 28),
-              label: "Notifications"),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.more_vert, size: 28), label: "More"),
-        ],
-        currentIndex: index,
-        onTap: (newIndex) => setState(() => index = newIndex),
+      appBar: AppBar(
+        title: Text(widget.title),
+      ),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            const Text("흔들어"),
+            Text("$_counter", style: Theme.of(context).textTheme.displayLarge),
+          ],
+        ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: _incrementCounter,
+        tooltip: "Increment",
+        child: const Icon(Icons.add),
       ),
     );
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    switch (state) {
+      case AppLifecycleState.resumed:
+        detector.startListening();
+        break;
+      case AppLifecycleState.inactive:
+        break;
+      case AppLifecycleState.paused:
+        detector.stopListening();
+        break;
+      case AppLifecycleState.detached:
+        break;
+      case AppLifecycleState.hidden:
+        break;
+    }
   }
 }
